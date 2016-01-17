@@ -16,6 +16,8 @@
         "aura/cli-kernel": "~2.0",
         "aura/web-kernel": "~2.0",
         "monolog/monolog": "~1.0",
+        "foa/filter-input-bundle": "^1.1",
+        "foa/filter-intl-bundle": "^1.1"
     },
     "autoload": {
         "psr-4": {
