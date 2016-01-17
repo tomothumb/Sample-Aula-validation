@@ -1,0 +1,14 @@
+/phpunit.xml.dist
+/LICENSE
+/CONTRIBUTING.md
+/phpunit.sh
+/phpunit.php
+/CHANGES.md
+/composer.lock
+/tmp/*
+!/tmp/.placeholder
+/vendor
+tmp/.placeholder
+/cli
+/tmp
+/tests
