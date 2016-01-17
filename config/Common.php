@@ -13,7 +13,7 @@ class Common extends Config
     public function define(Container $di)
     {
         $di->set('aura/project-kernel:logger', $di->lazyNew('Monolog\Logger'));
-
+        $di->set('MYAPP/contactform',$di->lazyNew('App\Form\Contact'));
     }
 
     public function modify(Container $di)
@@ -85,18 +85,17 @@ class Common extends Config
             $response_content = array();
 
 
-
-            $filter_factory = new FilterFactory();
-            $filter = $filter_factory->newInstance();
-            $filter->addSoftRule('first_name', $filter::IS, 'string');
-            $filter->addSoftRule('first_name', $filter::IS, 'strlenBetween', 6, 12);
-            $success = $filter->values($input);
-            if ( $success) {
+            $form = $di->get('MYAPP/contactform');
+            $form->fill($input);
+            $success = $form->filter();
+            if ($success) {
                 $response_content["message"] = "User input is valid.";
-            }else{
-                $response_content["message"][] = "User input is not valid.";
-                $messages = $filter->getMessages();
-                $response_content["message"] = $messages;
+            } else {
+                foreach ($form->getMessages() as $name => $messages) {
+                    foreach ($messages as $message) {
+                        $response_content["message"][] = "Input '{$name}': {$message}";
+                    }
+                }
             }
 
             $response_content["data"] = $input;
